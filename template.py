@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import logging
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s]: %(message)s:")
 
 project_name = "ChestCancerClassification"
 
@@ -22,7 +22,7 @@ list_of_files = [
     "requirements.txt",
     "setup.py",
     "experiments/experiments.ipynb",
-    "templates/index.html"
+    "templates/index.html",
 ]
 
 for filepath in list_of_files:
