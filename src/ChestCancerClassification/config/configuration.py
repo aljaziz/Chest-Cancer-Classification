@@ -1,6 +1,12 @@
 from ChestCancerClassification.constants import *
 from ChestCancerClassification.utils.utils import read_yaml, create_directories
-from ChestCancerClassification.entity.config_entity import DataIngestionConfig, PrepareBaseModelConfig
+from ChestCancerClassification.entity.config_entity import (
+    DataIngestionConfig,
+    PrepareBaseModelConfig,
+    TrainingConfig,
+)
+import os
+from glob import glob
 
 
 class ConfigurationManager:
@@ -30,6 +36,34 @@ class ConfigurationManager:
             base_model_path=Path(config.base_model_path),
             updated_base_model_path=Path(config.updated_base_model_path),
             params_weights=self.params.WEIGHTS,
-            params_classes=self.params.CLASSES
+            params_classes=self.params.CLASSES,
         )
         return prepare_base_model_config
+
+    def get_training_config(self) -> TrainingConfig:
+        training = self.config.training
+        params = self.params
+        training_data = os.path.join(
+            self.config.data_ingestion.unzip_dir, "Chest_CT_Scan_Data/train"
+        )
+        validation_data = os.path.join(
+            self.config.data_ingestion.unzip_dir, "Chest_CT_Scan_Data/valid"
+        )
+        all_image_path = glob(f"artifacts/data_ingestion/Chest_CT_Scan_Data/*/*/*.png")
+        create_directories([Path(training.root_dir)])
+        training_config = TrainingConfig(
+            root_dir=Path(training.root_dir),
+            trained_model_path=Path(training.trained_model_path),
+            training_data=Path(training_data),
+            validation_data=Path(validation_data),
+            all_image_path=all_image_path,
+            params_weights=params.WEIGHTS,
+            params_epochs=params.EPOCHS,
+            params_batch_size=params.BATCH_SIZE,
+            params_is_augmentation=params.AUGMENTATION,
+            params_image_size=params.IMAGE_SIZE,
+            params_learning_rate=params.LEARNING_RATE,
+            params_classes=params.CLASSES,
+            params_device=params.DEVICE,
+        )
+        return training_config
