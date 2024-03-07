@@ -29,9 +29,7 @@ class ConfigurationManager:
             root_dir=Path(config.root_dir),
             base_model_path=Path(config.base_model_path),
             updated_base_model_path=Path(config.updated_base_model_path),
-            params_learning_rate=self.params.LEARNING_RATE,
             params_weights=self.params.WEIGHTS,
-            params_classes=self.params.CLASSES,
-            params_device=self.params.DEVICE,
+            params_classes=self.params.CLASSES
         )
         return prepare_base_model_config
