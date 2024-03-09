@@ -31,9 +31,11 @@ class Training:
         self.config = config
 
     def get_base_model(self):
-        model = models.densenet121(weights=self.config.params_weights)
-        num_ftrs = model.classifier.in_features
-        model.classifier = torch.nn.Linear(num_ftrs, self.config.params_classes)
+        model = models.vgg16(weights=self.config.params_weights)
+        for param in model.parameters():
+                param.requires_grad = False
+        num_ftrs = model.classifier[6].in_features
+        model.classifier[6] = torch.nn.Linear(num_ftrs, self.config.params_classes)
         self.model = model.to(self.config.params_device)
         self.optimizer = torch.optim.Adam(
             self.model.parameters(), lr=self.config.params_learning_rate
