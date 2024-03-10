@@ -14,8 +14,6 @@ from ChestCancerClassification.pipeline.model_evaluation_pipeline import (
 
 
 STAGE_NAME = "Data Ingestion stage"
-
-
 try:
     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
     obj = DataIngestionPipeline()
@@ -48,6 +46,7 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e
+
 
 STAGE_NAME = "Evaluation stage"
 try:
