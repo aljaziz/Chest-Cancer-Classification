@@ -1,5 +1,4 @@
-torch
-torchvision
+tensorflow[and-cuda]
 opencv-python
 pandas 
 gdown
