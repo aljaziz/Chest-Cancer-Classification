@@ -41,7 +41,7 @@ stages:
     deps:
       - src/ChestCancerClassification/pipeline/model_evaluation_pipeline.py
       - config/config.yaml
-      - artifacts/data_ingestion/Chest_CT-Scan_data
+      - artifacts/data_ingestion/Chest_CT_Scan_Data
       - artifacts/training/model.h5
     params:
       - IMAGE_SIZE
