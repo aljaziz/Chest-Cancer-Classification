@@ -34,3 +34,18 @@ class TrainingConfig:
     params_learning_rate: float
     params_classes: int
     params_device: str
+
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    path_of_model: Path
+    testing_data: Path
+    all_params: dict
+    all_image_path: list
+    mlflow_uri: str
+    params_image_size: list
+    params_batch_size: int
+    params_device: str
+    params_learning_rate: float
+    params_classes: int
+    params_weights: str

@@ -4,6 +4,7 @@ from ChestCancerClassification.entity.config_entity import (
     DataIngestionConfig,
     PrepareBaseModelConfig,
     TrainingConfig,
+    EvaluationConfig,
 )
 import os
 from glob import glob
@@ -67,3 +68,23 @@ class ConfigurationManager:
             params_device=params.DEVICE,
         )
         return training_config
+
+    def get_evaluation_config(self) -> EvaluationConfig:
+        testing_data = os.path.join(
+            self.config.data_ingestion.unzip_dir, "Chest_CT_Scan_Data/test"
+        )
+        all_image_path = glob(f"artifacts/data_ingestion/Chest_CT_Scan_Data/*/*/*.png")
+        eval_config = EvaluationConfig(
+            path_of_model=self.config.training.trained_model_path,
+            testing_data=testing_data,
+            mlflow_uri="https://dagshub.com/aljaziz/Chest-Cancer-Classification.mlflow",
+            all_params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE,
+            params_device=self.params.DEVICE,
+            params_learning_rate=self.params.LEARNING_RATE,
+            params_classes=self.params.CLASSES,
+            params_weights=self.params.WEIGHTS,
+            all_image_path=all_image_path,
+        )
+        return eval_config
