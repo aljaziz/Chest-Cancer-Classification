@@ -10,7 +10,7 @@ class PrepareBaseModel:
         self.config = config
 
     def get_base_model(self):
-        self.model = models.densenet121(weights=self.config.params_weights)
+        self.model = models.vgg16(weights=self.config.params_weights)
         self.save_model(path=self.config.base_model_path, model=self.model)
 
     @staticmethod
@@ -23,8 +23,8 @@ class PrepareBaseModel:
                 for param in model.features[i].parameters():
                     model.requires_grad = False
 
-        num_ftrs = model.classifier.in_features
-        model.classifier = nn.Linear(num_ftrs, classes)
+        num_ftrs = model.classifier[6].in_features
+        model.classifier[6] = nn.Linear(num_ftrs, classes)
         full_model = model
         print(full_model)
         return full_model
